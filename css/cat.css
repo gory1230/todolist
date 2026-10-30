@@ -1,0 +1,259 @@
+/* ==========================================================================
+   DotCat Todo - Cat Mascot Room & Animations
+   PRD 3.3 고양이 마스코트 7가지 모습 및 반응형 애니메이션
+   ========================================================================== */
+
+/* 고양이 방(Room) 컨테이너 */
+.cat-room-container {
+  background: linear-gradient(180deg, #251B3D 0%, #1E1633 100%);
+  border: var(--pixel-border);
+  box-shadow: var(--pixel-shadow);
+  padding: 16px;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+/* 고양이 방 배경 인테리어 도트 (책상, 달, 로파이 창문 느낌) */
+.cat-room-decor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.15;
+  background-image:
+    radial-gradient(var(--point-lavender) 1px, transparent 1px),
+    radial-gradient(var(--sub-lilac) 1px, transparent 1px);
+  background-size: 16px 16px;
+  background-position: 0 0, 8px 8px;
+}
+
+/* 고양이 룸 내부 플렉스 레이아웃 */
+.cat-stage-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  position: relative;
+  z-index: 1;
+}
+
+/* 고양이 스프라이트 래퍼 */
+.cat-sprite-wrapper {
+  width: 72px;
+  height: 72px;
+  min-width: 72px;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(2px 3px 0px rgba(0, 0, 0, 0.5));
+  transition: transform 0.1s ease;
+  user-select: none;
+}
+
+.cat-sprite-wrapper:hover {
+  transform: scale(1.08);
+}
+
+.cat-sprite-wrapper:active {
+  transform: scale(0.95);
+}
+
+.pixel-cat-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* 픽셀 말풍선 */
+.cat-speech-bubble {
+  flex: 1;
+  background-color: var(--card-dusk);
+  border: var(--pixel-border);
+  box-shadow: var(--pixel-shadow-sm);
+  padding: 10px 14px;
+  position: relative;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+}
+
+/* 말풍선 픽셀 꼬리 */
+.cat-speech-bubble::before {
+  content: '';
+  position: absolute;
+  left: -8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-right: 8px solid #120D20;
+}
+
+.cat-speech-bubble::after {
+  content: '';
+  position: absolute;
+  left: -5px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  border-right: 6px solid var(--card-dusk);
+}
+
+.pixel-speech-text {
+  font-family: var(--font-pixel);
+  font-size: 13px;
+  color: var(--text-cream);
+  line-height: 1.4;
+  word-break: keep-all;
+}
+
+/* 쓰다듬기 바운스 애니메이션 */
+@keyframes catPetBounce {
+  0% { transform: translateY(0) scale(1); }
+  30% { transform: translateY(-8px) scale(1.15, 0.9); }
+  60% { transform: translateY(2px) scale(0.95, 1.05); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+.cat-bounce-active {
+  animation: catPetBounce 0.4s ease-out;
+}
+
+/* 1. 낮잠 애니메이션 (숨쉬기 & zzz) */
+@keyframes catSleepBreath {
+  0%, 100% { transform: scale(1, 1); }
+  50% { transform: scale(1.02, 0.97) translateY(1px); }
+}
+.cat-state-sleep {
+  animation: catSleepBreath 3s ease-in-out infinite;
+}
+
+@keyframes floatZzz {
+  0% { opacity: 0; transform: translateY(0px) scale(0.8); }
+  50% { opacity: 1; transform: translateY(-4px) scale(1); }
+  100% { opacity: 0; transform: translateY(-8px) scale(1.2); }
+}
+.pixel-zzz {
+  animation: floatZzz 2s infinite ease-out;
+}
+
+/* 2. 기다림 애니메이션 (꼬리 살랑살랑) */
+@keyframes tailWag {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(-14deg); }
+}
+.cat-tail-wag {
+  transform-origin: 21px 22px;
+  animation: tailWag 1.8s ease-in-out infinite;
+}
+
+/* 3. 응원 애니메이션 (앞발 번쩍) */
+@keyframes pawCheer {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+.cheer-paw {
+  animation: pawCheer 0.8s ease-in-out infinite;
+}
+
+/* 4. 신남 애니메이션 (앙증맞은 흔들림) */
+@keyframes catExcitedDance {
+  0%, 100% { transform: rotate(0deg) translateY(0); }
+  25% { transform: rotate(-4deg) translateY(-2px); }
+  75% { transform: rotate(4deg) translateY(-2px); }
+}
+.cat-state-excited {
+  animation: catExcitedDance 0.6s ease-in-out infinite;
+}
+
+/* 5. 대성공 애니메이션 (기쁨의 댄스 & 점프) */
+@keyframes catCelebrateJump {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-6px) scale(1.05); }
+}
+.cat-state-celebrate {
+  animation: catCelebrateJump 0.7s ease-in-out infinite;
+}
+
+@keyframes floatHeart {
+  0% { transform: translateY(0) scale(0.8); opacity: 0.5; }
+  50% { transform: translateY(-4px) scale(1.1); opacity: 1; }
+  100% { transform: translateY(-8px) scale(0.9); opacity: 0; }
+}
+.floating-heart {
+  animation: floatHeart 1.5s ease-out infinite;
+}
+
+/* 6. 깜짝 애니메이션 (털 곤두섬 & 떨림) */
+@keyframes catShockShake {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(-1px, 1px); }
+  75% { transform: translate(1px, -1px); }
+}
+.cat-state-shocked {
+  animation: catShockShake 0.2s ease-in-out infinite;
+}
+
+@keyframes shockMarkBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+.shock-mark {
+  animation: shockMarkBounce 0.4s ease-in-out infinite;
+}
+
+/* 7. 밤 졸림 애니메이션 */
+@keyframes catNightDrowsy {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(2px) scaleY(0.97); }
+}
+.cat-state-night {
+  animation: catNightDrowsy 4s ease-in-out infinite;
+}
+
+/* 쓰다듬기 시 솟아오르는 하트 파티클 */
+.pixel-heart-particle {
+  position: absolute;
+  color: var(--accent-pink);
+  font-size: 14px;
+  pointer-events: none;
+  z-index: 100;
+  animation: heartFlyUp 1.2s forwards cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+@keyframes heartFlyUp {
+  0% { opacity: 1; transform: translate(0, 0) scale(0.6); }
+  50% { opacity: 1; transform: translate(calc(var(--rand-x, 0) * 1px), -24px) scale(1.2); }
+  100% { opacity: 0; transform: translate(calc(var(--rand-x, 0) * 2px), -44px) scale(0.8); }
+}
+
+/* 할 일 완료 시 터지는 별가루 파티클 */
+.task-complete-particle {
+  position: fixed;
+  font-size: 14px;
+  pointer-events: none;
+  z-index: 9999;
+  font-family: var(--font-pixel);
+  animation: particleBurst 0.65s forwards ease-out;
+}
+
+@keyframes particleBurst {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--dx, 20px), var(--dy, -20px)) scale(0.4) rotate(45deg);
+  }
+}
+

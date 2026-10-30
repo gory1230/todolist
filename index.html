@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>도트냥 할 일 (DotCat Todo)</title>
+  
+  <!-- PWA & 메타 설정 (PRD F-54) -->
+  <link rel="manifest" href="./manifest.json">
+  <meta name="theme-color" content="#1E1633">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="도트냥">
+  <link rel="icon" type="image/svg+xml" href="./assets/icon-192.svg">
+  <link rel="apple-touch-icon" href="./assets/icon-192.svg">
+
+  <!-- 스타일시트 로드 -->
+  <link rel="stylesheet" href="./css/pixel-base.css">
+  <link rel="stylesheet" href="./css/cat.css">
+  <link rel="stylesheet" href="./css/layout.css">
+  <link rel="stylesheet" href="./css/components.css">
+</head>
+<body>
+  <!-- 브라운관 로파이 스캔라인 오버레이 (설정에서 On/Off 가능) -->
+  <div id="scanline-overlay" class="scanline-overlay"></div>
+
+  <div id="app">
+    <!-- 1. 앱 상단 헤더 -->
+    <header class="app-header">
+      <div class="brand-wrapper">
+        <svg class="brand-logo-icon" viewBox="0 0 16 16" shape-rendering="crispEdges">
+          <rect x="2" y="3" width="12" height="10" fill="#FFF3D6" />
+          <polygon points="2,3 4,0 6,3" fill="#FF9EC7" />
+          <polygon points="10,3 12,0 14,3" fill="#FF9EC7" />
+          <rect x="4" y="6" width="2" height="2" fill="#2D2347" />
+          <rect x="10" y="6" width="2" height="2" fill="#2D2347" />
+          <rect x="7" y="8" width="2" height="1" fill="#FF9EC7" />
+        </svg>
+        <span class="brand-title">도트냥 할 일</span>
+        <span class="brand-sub">DotCat</span>
+      </div>
+
+      <div class="header-right-tools">
+        <button type="button" id="pwa-install-btn" class="pixel-btn pixel-btn-xs pixel-btn-lavender" style="display: none;">
+          📱 홈 화면 추가
+        </button>
+        <span id="network-status-badge" class="status-pill status-online">ONLINE</span>
+      </div>
+    </header>
+
+    <!-- 2. PC 3단 / 모바일 메인 컨테이너 -->
+    <div class="app-container">
+      <!-- 2-1. PC 왼쪽 사이드바 (화면 5개 및 필터 바로가기) -->
+      <aside class="app-sidebar">
+        <div class="sidebar-nav-group">
+          <span class="sidebar-group-title">보기 (Views)</span>
+          <button type="button" class="sidebar-nav-btn active" data-nav-target="today">
+            <span class="sidebar-icon">☀️</span>
+            <span>오늘 할 일 (Today)</span>
+          </button>
+          <button type="button" class="sidebar-nav-btn" data-nav-target="all" data-nav-filter="all">
+            <span class="sidebar-icon">📋</span>
+            <span>전체 할 일 목록</span>
+          </button>
+          <button type="button" class="sidebar-nav-btn" data-nav-target="all" data-nav-filter="inbox">
+            <span class="sidebar-icon">📥</span>
+            <span>인박스 (Inbox)</span>
+          </button>
+          <button type="button" class="sidebar-nav-btn" data-nav-target="all" data-nav-filter="upcoming">
+            <span class="sidebar-icon">📅</span>
+            <span>예정된 일정</span>
+          </button>
+          <button type="button" class="sidebar-nav-btn" data-nav-target="all" data-nav-filter="completed">
+            <span class="sidebar-icon">✅</span>
+            <span>완료된 목록</span>
+          </button>
+        </div>
+
+        <div class="sidebar-nav-group">
+          <span class="sidebar-group-title">관리 & 설정</span>
+          <button type="button" class="sidebar-nav-btn" data-nav-target="lists">
+            <span class="sidebar-icon">📁</span>
+            <span>목록(분류) 관리</span>
+          </button>
+          <button type="button" class="sidebar-nav-btn" data-nav-target="trash">
+            <span class="sidebar-icon">🗑️</span>
+            <span>휴지통</span>
+          </button>
+          <button type="button" class="sidebar-nav-btn" data-nav-target="settings">
+            <span class="sidebar-icon">⚙️</span>
+            <span>설정 & 백업</span>
+          </button>
+        </div>
+      </aside>
+
+      <!-- 2-2. 중앙 메인 작업 영역 -->
+      <main class="app-main">
+        <!-- 고양이 마스코트 방 (PRD 3.3) -->
+        <div id="cat-room-container" class="cat-room-container">
+          <div class="cat-room-decor"></div>
+          <div class="cat-stage-row">
+            <div id="cat-sprite-wrapper" class="cat-sprite-wrapper" title="냥이를 클릭해 쓰다듬어 보세요!">
+              <!-- Cat SVG 렌더링 -->
+            </div>
+            <div id="cat-speech-bubble" class="cat-speech-bubble">
+              <span class="pixel-speech-text">오늘도 힘내보자냥! 같이 시작해보자냥~</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 오늘 달성률 바 (PRD F-31) -->
+        <div class="progress-card">
+          <div class="progress-header">
+            <span id="progress-text">오늘 달성률: 0/0 (0%)</span>
+          </div>
+          <div class="progress-bar-track">
+            <div id="progress-bar-fill" class="progress-bar-fill"></div>
+          </div>
+        </div>
+
+        <!-- 빠른 할 일 추가 인풋 바 (PRD F-01 5초 입력) -->
+        <div class="quick-add-container">
+          <form id="quick-add-form" class="quick-add-form">
+            <select id="quick-add-list-select" class="quick-add-list-select" title="목록 분류">
+              <!-- 목록 옵션 동적 렌더링 -->
+            </select>
+            <select id="quick-add-due-select" class="quick-add-list-select quick-add-due-select" title="마감일 빠른 선택">
+              <option value="today">☀️ 오늘</option>
+              <option value="tomorrow">🌙 내일</option>
+              <option value="none">📥 날짜 없음</option>
+            </select>
+            <input type="text" id="quick-add-input" class="pixel-input quick-add-input" placeholder="새 할 일 입력 후 Enter (단축키: N)..." maxlength="200" autocomplete="off">
+            <button type="submit" id="quick-add-submit-btn" class="pixel-btn pixel-btn-lavender">
+              추가
+            </button>
+          </form>
+        </div>
+
+        <!-- 메인 뷰 헤더 타이틀 -->
+        <div class="main-view-header">
+          <h2 id="view-title" class="view-title">오늘 할 일</h2>
+          <span id="view-subtitle" class="view-subtitle"></span>
+        </div>
+
+        <!-- 동적 뷰 콘텐츠 영역 (오늘, 전체, 목록관리, 설정, 휴지통) -->
+        <div id="main-content-area"></div>
+      </main>
+
+      <!-- 2-3. 우측 상세 패널 (PC는 우측 고정 칼럼, 모바일은 바텀시트 모달) -->
+      <aside id="detail-panel-container" class="app-detail-panel">
+        <!-- 상세 내용 동적 렌더링 -->
+      </aside>
+    </div>
+
+    <!-- 3. 모바일 하단 네비게이션 탭 (PRD 5.1) -->
+    <nav class="mobile-bottom-nav">
+      <button type="button" class="mobile-nav-btn active" data-nav-target="today">
+        <span class="mobile-nav-icon">☀️</span>
+        <span class="nav-tab-label">오늘</span>
+      </button>
+      <button type="button" class="mobile-nav-btn" data-nav-target="all" data-nav-filter="all">
+        <span class="mobile-nav-icon">📋</span>
+        <span class="nav-tab-label">전체</span>
+      </button>
+      <button type="button" class="mobile-nav-btn" data-nav-target="lists">
+        <span class="mobile-nav-icon">📁</span>
+        <span class="nav-tab-label">목록</span>
+      </button>
+      <button type="button" class="mobile-nav-btn" data-nav-target="settings">
+        <span class="mobile-nav-icon">⚙️</span>
+        <span class="nav-tab-label">설정</span>
+      </button>
+    </nav>
+
+    <!-- 4. 삭제 실행 취소 (Undo) 5초 토스트 (PRD F-04) -->
+    <div id="undo-toast" class="undo-toast">
+      <span id="undo-text">할 일이 삭제되었습니다.</span>
+      <button type="button" id="undo-btn" class="pixel-btn pixel-btn-sm pixel-btn-lavender">
+        되돌리기 (Undo)
+      </button>
+    </div>
+  </div>
+
+  <!-- 스크립트 로드 -->
+  <script src="./js/icons.js"></script>
+  <script src="./js/sound.js"></script>
+  <script src="./js/store.js"></script>
+  <script src="./js/cat.js"></script>
+  <script src="./js/ui.js"></script>
+  <script src="./js/app.js"></script>
+  <script src="./js/pwa.js"></script>
+</body>
+</html>
+

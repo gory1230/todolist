@@ -1,0 +1,22 @@
+{
+  "name": "도트냥 할 일 (DotCat Todo)",
+  "short_name": "도트냥",
+  "description": "밤보라 감성의 귀여운 도트 고양이 할 일 앱",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#1E1633",
+  "theme_color": "#1E1633",
+  "icons": [
+    {
+      "src": "./assets/icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "./assets/icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}
+

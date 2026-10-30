@@ -1,0 +1,317 @@
+/* ==========================================================================
+   DotCat Todo - Layout System (Responsive PC 3-Column & Mobile Bottom Nav)
+   PRD 5.1 & 8.1 반응형 레이아웃 명세 준수
+   ========================================================================== */
+
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* 상단 탑바 (헤더) */
+.app-header {
+  height: 52px;
+  background-color: var(--card-dusk);
+  border-bottom: var(--pixel-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.brand-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-logo-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.brand-title {
+  font-family: var(--font-pixel);
+  font-size: 16px;
+  color: var(--text-cream);
+  font-weight: bold;
+}
+
+.brand-sub {
+  font-family: var(--font-pixel);
+  font-size: 11px;
+  color: var(--point-lavender);
+  background: rgba(183, 148, 246, 0.15);
+  padding: 2px 6px;
+  border: 1px solid var(--point-lavender);
+}
+
+.header-right-tools {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* 네트워크 상태 뱃지 */
+.status-pill {
+  font-family: var(--font-pixel);
+  font-size: 11px;
+  padding: 3px 8px;
+  border: var(--pixel-border);
+}
+.status-online {
+  background-color: rgba(143, 227, 192, 0.15);
+  color: var(--accent-mint);
+  border-color: var(--accent-mint);
+}
+.status-offline {
+  background-color: rgba(255, 122, 138, 0.15);
+  color: var(--accent-coral);
+  border-color: var(--accent-coral);
+}
+
+/* 메인 앱 바디 컨테이너 */
+.app-container {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* 1. PC 왼쪽 사이드바 (데스크톱 전용) */
+.app-sidebar {
+  width: 260px;
+  min-width: 260px;
+  background-color: #1a132c;
+  border-right: var(--pixel-border);
+  display: flex;
+  flex-direction: column;
+  padding: 16px 12px;
+  gap: 16px;
+}
+
+.sidebar-nav-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sidebar-group-title {
+  font-family: var(--font-pixel);
+  font-size: 11px;
+  color: var(--sub-lilac);
+  padding: 4px 8px;
+  text-transform: uppercase;
+}
+
+.sidebar-nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-cream);
+  font-family: var(--font-pixel);
+  font-size: 13px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.1s ease;
+}
+
+.sidebar-nav-btn:hover {
+  background-color: var(--card-dusk);
+  border-color: var(--point-lavender);
+}
+
+.sidebar-nav-btn.active {
+  background-color: var(--card-dusk);
+  border: var(--pixel-border);
+  box-shadow: var(--pixel-shadow-sm);
+  color: var(--point-lavender);
+}
+
+.sidebar-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+}
+
+/* 2. 중앙 메인 워크스페이스 */
+.app-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 24px;
+  max-width: 850px;
+  margin: 0 auto;
+  width: 100%;
+  overflow-y: auto;
+}
+
+/* 상단 뷰 타이틀 & 서브타이틀 */
+.main-view-header {
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.view-title {
+  font-size: 20px;
+  color: var(--text-cream);
+}
+
+.view-subtitle {
+  font-size: 12px;
+  color: var(--sub-lilac);
+  font-family: var(--font-pixel);
+}
+
+/* 3. 우측 상세 패널 (PC는 우측 고정 칼럼, 모바일은 모달) */
+.app-detail-panel {
+  width: 380px;
+  min-width: 380px;
+  background-color: #1a132c;
+  border-left: var(--pixel-border);
+  padding: 20px 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-empty-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--sub-lilac);
+  text-align: center;
+  padding: 30px;
+  gap: 12px;
+  font-family: var(--font-pixel);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.placeholder-cat {
+  font-size: 40px;
+  filter: drop-shadow(2px 2px 0px #120D20);
+}
+
+/* 모바일 전용 하단 네비게이션 바 (<= 768px) */
+.mobile-bottom-nav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background-color: var(--card-dusk);
+  border-top: var(--pixel-border);
+  z-index: 100;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 8px;
+}
+
+.mobile-nav-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  background: transparent;
+  border: none;
+  color: var(--text-cream-dim);
+  font-family: var(--font-pixel);
+  font-size: 11px;
+  cursor: pointer;
+  padding: 6px 12px;
+  flex: 1;
+}
+
+.mobile-nav-btn.active {
+  color: var(--point-lavender);
+}
+
+.mobile-nav-btn.active .mobile-nav-icon {
+  transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   모바일 반응형 미디어 쿼리 (<= 768px)
+   ========================================================================== */
+@media (max-width: 768px) {
+  /* PC 사이드바 숨김 */
+  .app-sidebar {
+    display: none;
+  }
+
+  /* 모바일 하단 탭 표시 */
+  .mobile-bottom-nav {
+    display: flex;
+  }
+
+  /* 메인 영역 패딩 조정 및 하단 탭 여백 확보 */
+  .app-main {
+    padding: 12px 14px 80px 14px;
+    max-width: 100%;
+  }
+
+  /* 상세 패널은 모바일에서 바텀 시트 모달로 전환 */
+  .app-detail-panel {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 200;
+    background: transparent;
+    border: none;
+    padding: 0;
+  }
+
+  .app-detail-panel.active {
+    display: flex;
+  }
+
+  .modal-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(18, 13, 32, 0.75);
+    backdrop-filter: blur(2px);
+  }
+
+  .detail-panel-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    max-height: 85vh;
+    background-color: var(--card-dusk);
+    border-top: var(--pixel-border);
+    padding: 16px;
+    overflow-y: auto;
+    animation: slideUp 0.25s ease-out;
+  }
+
+  @keyframes slideUp {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+  }
+}
+

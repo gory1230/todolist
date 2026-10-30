@@ -1,0 +1,187 @@
+/* ==========================================================================
+   DotCat Todo - Pixel Base Theme & Variables
+   PRD 3.1 색상, 3.2 글꼴/그래픽, 3.5 디자인 원칙 완벽 준수
+   ========================================================================== */
+
+/* 갈무리 도트 한글 웹폰트 CDN 로드 (SIL 오픈 폰트 라이선스) */
+@import url('https://cdn.jsdelivr.net/npm/galmuri/dist/galmuri.css');
+
+:root {
+  /* PRD 3.1 컬러 팔레트 */
+  --bg-night: #1E1633;       /* 밤보라 - 앱 전체 배경 */
+  --card-dusk: #2D2347;      /* 어스름 - 할 일 카드, 입력창, 컨테이너 */
+  --card-dusk-hover: #362B54;
+  --point-lavender: #B794F6; /* 라벤더 - 기본 포인트 버튼, 선택된 탭, 진행 바 */
+  --point-lavender-dark: #9168DE;
+  --sub-lilac: #D6C6FF;      /* 연라일락 - 제목, 보조 아이콘 */
+  --text-cream: #FFF3D6;     /* 크림 - 본문 글자, 고양이 털 (대비비 4.5:1 이상) */
+  --text-cream-dim: #D1C5AA;
+  --accent-pink: #FF9EC7;    /* 분홍 - 우선순위 높음, 하트, 귀여운 강조 */
+  --accent-mint: #8FE3C0;    /* 민트 - 완료 체크, 성공 표시 */
+  --accent-coral: #FF7A8A;   /* 산호 - 기한 지남, 경고, 위험 삭제 */
+
+  /* 픽셀 보더 & 섀도우 (둥근 모서리 대신 단단한 픽셀 테두리 - PRD 3.2) */
+  --pixel-border: 2px solid #120D20;
+  --pixel-shadow: 3px 3px 0px 0px #120D20;
+  --pixel-shadow-sm: 2px 2px 0px 0px #120D20;
+  --pixel-shadow-active: 1px 1px 0px 0px #120D20;
+
+  /* 폰트 */
+  --font-pixel: 'Galmuri11', 'DungGeunMo', monospace;
+  --font-body: system-ui, -apple-system, BlinkMacSystemFont, 'Pretendard', sans-serif;
+}
+
+/* CSS Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-night);
+  color: var(--text-cream);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.5;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 도트 이미지 뭉개짐 방지 (PRD 3.2) */
+img, svg, canvas, .pixel-art {
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+/* 로파이 브라운관 스캔라인 오버레이 (PRD 3.2 & F-56) */
+.scanline-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9999;
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%,
+    rgba(0, 0, 0, 0.25) 50%
+  ),
+  linear-gradient(
+    90deg,
+    rgba(255, 0, 0, 0.02),
+    rgba(0, 255, 0, 0.01),
+    rgba(0, 0, 255, 0.02)
+  );
+  background-size: 100% 3px, 6px 100%;
+  opacity: 0.35;
+}
+
+/* 공통 픽셀 박스 & 카드 스타일 */
+.pixel-card {
+  background-color: var(--card-dusk);
+  border: var(--pixel-border);
+  box-shadow: var(--pixel-shadow);
+  padding: 14px 16px;
+  position: relative;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.pixel-card:hover {
+  background-color: var(--card-dusk-hover);
+}
+
+.pixel-box-coral {
+  background-color: rgba(255, 122, 138, 0.12);
+  border: 2px solid var(--accent-coral);
+  box-shadow: var(--pixel-shadow);
+  padding: 14px 16px;
+}
+
+/* 도트 폰트 적용 클래스 */
+.pixel-font,
+h1, h2, h3, h4,
+.pixel-btn,
+.pixel-badge,
+.section-title,
+.nav-tab-label {
+  font-family: var(--font-pixel);
+  letter-spacing: -0.5px;
+}
+
+/* 하이라이트 텍스트 */
+.pixel-highlight {
+  color: var(--point-lavender);
+  font-weight: bold;
+}
+
+/* 폼 인풋 공통 */
+.pixel-input,
+.pixel-select,
+.pixel-textarea {
+  width: 100%;
+  background-color: #1a132c;
+  color: var(--text-cream);
+  border: var(--pixel-border);
+  box-shadow: inset 2px 2px 0px rgba(0, 0, 0, 0.4);
+  padding: 10px 12px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.pixel-input:focus,
+.pixel-select:focus,
+.pixel-textarea:focus {
+  border-color: var(--point-lavender);
+  background-color: #23193c;
+}
+
+.pixel-input::placeholder,
+.pixel-textarea::placeholder {
+  color: #7E68A8;
+}
+
+/* 흔들림 애니메이션 (빈 입력 시 피드백 - PRD 8.2) */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-5px); }
+  40%, 80% { transform: translateX(5px); }
+}
+
+.shake-input {
+  animation: shake 0.3s ease-in-out;
+  border-color: var(--accent-coral) !important;
+}
+
+/* 스크롤바 커스텀 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-night);
+}
+::-webkit-scrollbar-thumb {
+  background: #3c2f5d;
+  border: 1px solid #120D20;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--point-lavender);
+}
+
+/* 동작 줄이기 설정 존중 (PRD 3.5) */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+

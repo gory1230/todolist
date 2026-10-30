@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" shape-rendering="crispEdges">
+  <rect width="512" height="512" fill="#1E1633" rx="96"/>
+  <rect x="64" y="64" width="384" height="384" fill="#2D2347" stroke="#B794F6" stroke-width="12"/>
+  <!-- 고양이 귀 -->
+  <rect x="128" y="118" width="64" height="74" fill="#FFF3D6"/>
+  <rect x="144" y="138" width="32" height="42" fill="#FF9EC7"/>
+  <rect x="320" y="118" width="64" height="74" fill="#FFF3D6"/>
+  <rect x="336" y="138" width="32" height="42" fill="#FF9EC7"/>
+  <!-- 고양이 머리 -->
+  <rect x="116" y="180" width="280" height="180" fill="#FFF3D6"/>
+  <!-- 눈 -->
+  <rect x="160" y="234" width="52" height="52" fill="#2D2347"/>
+  <rect x="170" y="234" width="22" height="22" fill="#FFF3D6"/>
+  <rect x="300" y="234" width="52" height="52" fill="#2D2347"/>
+  <rect x="310" y="234" width="22" height="22" fill="#FFF3D6"/>
+  <!-- 볼터치 -->
+  <rect x="138" y="298" width="44" height="22" fill="#FF9EC7"/>
+  <rect x="330" y="298" width="44" height="22" fill="#FF9EC7"/>
+  <!-- 코와 입 -->
+  <rect x="246" y="288" width="20" height="20" fill="#FF9EC7"/>
+  <rect x="226" y="320" width="60" height="12" fill="#7E68A8"/>
+  <!-- 별 포인트 -->
+  <polygon points="256,74 266,102 294,106 272,122 278,150 256,134 234,150 240,122 218,106 246,102" fill="#8FE3C0"/>
+</svg>
+
